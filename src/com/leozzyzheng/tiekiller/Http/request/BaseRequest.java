@@ -30,6 +30,7 @@ public abstract class BaseRequest<T> {
         setIsNeedLoginInfo(isNeed);
         mMethod = method;
         mUrl = url;
+        mCookieHeader.put("ka", "open");
     }
 
     public void setIsNeedLoginInfo(boolean isNeed) {
@@ -203,4 +204,10 @@ public abstract class BaseRequest<T> {
      * @param reason 失败原因
      */
     abstract protected void onRequestFailed(Exception reason);
+
+    public static interface Listener<T> {
+        public void onRequestSuccess(T data);
+
+        public void onRequestFailed(Exception reason);
+    }
 }

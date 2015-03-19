@@ -165,7 +165,7 @@ public class JsRSAUtils {
         }
     }
 
-    private class KeyPair {
+    public class KeyPair {
         public BigInt e;
         public BigInt d;
         public BigInt m;
@@ -555,7 +555,7 @@ public class JsRSAUtils {
         return result;
     }
 
-    private String encryptedString(KeyPair key, String s) {
+    public String encryptedString(KeyPair key, String s) {
         Vector<Integer> a = new Vector<Integer>();
         int sl = s.length();
         int i = 0;
