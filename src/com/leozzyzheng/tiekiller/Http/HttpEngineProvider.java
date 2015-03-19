@@ -26,7 +26,7 @@ public class HttpEngineProvider {
     private VolleyHttpEngine mVolleyEngine;
 
     public void createVollyEngine(Context context) {
-        mVolleyEngine = VolleyHttpEngine.getInstance(context);
+        mVolleyEngine = VolleyHttpEngine.getInstance(context.getApplicationContext());
     }
 
     public HttpEngine getEngine() {
