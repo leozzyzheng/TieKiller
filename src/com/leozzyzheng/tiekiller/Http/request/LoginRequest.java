@@ -25,7 +25,6 @@ public class LoginRequest extends JsonObjectBaseRequest {
 
     private String username;
     private String password;
-    private String encryptedPassword;
     private OnLoginListenr loginListenr;
 
     public static interface OnLoginListenr {
@@ -48,7 +47,7 @@ public class LoginRequest extends JsonObjectBaseRequest {
         String mod = "B3C61EBBA4659C4CE3639287EE871F1F48F7930EA977991C7AFE3CC442FEA49643212E7D570C853F368065CC57A2014666DA8AE7D493FD47D171C0D894EEE3ED7F99F6798B7FFD7B5873227038AD23E3197631A8CB642213B9F27D4901AB0D92BFA27542AE890855396ED92775255C977F5C302F1E7ED4B1E369C12CB6B1822F";
         String exp = "10001";
         JsRSAUtils.KeyPair keyPair = JsRSAUtils.getInstance().generateKeyPair(exp, "", mod);
-        encryptedPassword = JsRSAUtils.getInstance().encryptedString(keyPair, password + t);
+        String encryptedPassword = JsRSAUtils.getInstance().encryptedString(keyPair, password + t);
 
         Map<String, String> body = new HashMap<String, String>();
         body.put("username", username);

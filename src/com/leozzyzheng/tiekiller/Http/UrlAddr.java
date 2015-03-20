@@ -9,4 +9,5 @@ public class UrlAddr {
     public static final String LOGIN = "http://wappass.baidu.com/wp/api/login";
 
     public static final String AUTO_LOGIN = HOST + "/c/s/login";
+    public static final String FORUMRECOMMEND = HOST + "/c/f/forum/forumrecommend";
 }

@@ -1,6 +1,7 @@
 package com.leozzyzheng.tiekiller.http;
 
 import android.content.Context;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -49,6 +50,10 @@ public class VolleyHttpEngine implements HttpEngine {
             }
         });
         mQueue.add(volleyRequest);
+    }
+
+    public void send(Request r) {
+        mQueue.add(r);
     }
 
     /**

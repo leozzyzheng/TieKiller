@@ -125,7 +125,7 @@ public abstract class BaseRequest<T> {
             params.put("ka", "open");
             params.put("model", "2015011");
             params.put("stErrorNums", "0");
-            params.put("timestamp", "" + System.currentTimeMillis());
+            params.put("timestamp", "0");
         }
 
         //字典排序

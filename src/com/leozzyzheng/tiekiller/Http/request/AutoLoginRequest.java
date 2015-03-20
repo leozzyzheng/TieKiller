@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  * Created by leozzyzheng on 2015/3/19.
- * 自动登录请求
+ * 自动登录请求,也用来获取用户的详细信息
  */
 public class AutoLoginRequest extends JsonObjectBaseRequest {
 

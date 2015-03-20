@@ -3,12 +3,15 @@ package com.leozzyzheng.tiekiller;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.leozzyzheng.tiekiller.account.AccountManger;
 import com.leozzyzheng.tiekiller.http.HttpEngineProvider;
-import com.leozzyzheng.tiekiller.http.request.AutoLoginRequest;
+import com.leozzyzheng.tiekiller.http.request.BaWuRequest;
 import com.leozzyzheng.tiekiller.http.request.LoginRequest;
 import com.leozzyzheng.tiekiller.utils.UILHelper;
 
@@ -20,6 +23,7 @@ public class MyActivity extends Activity {
     private TextView mBtn;
     private ImageView mIcon;
     private TextView mAutoBtn;
+    private WebView mWeb;
 
     /**
      * Called when the activity is first created.
@@ -34,6 +38,7 @@ public class MyActivity extends Activity {
         mBtn = (TextView) findViewById(R.id.login);
         mIcon = (ImageView) findViewById(R.id.icon);
         mAutoBtn = (TextView) findViewById(R.id.auto_login);
+        mWeb = (WebView) findViewById(R.id.web);
 
         HttpEngineProvider.getInstance().createVollyEngine(this);
 
@@ -72,30 +77,42 @@ public class MyActivity extends Activity {
         mAutoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AutoLoginRequest request = new AutoLoginRequest(new AutoLoginRequest.OnLoginListenr() {
+//                AutoLoginRequest request = new AutoLoginRequest(new AutoLoginRequest.OnLoginListenr() {
+//                    @Override
+//                    public void onLoginSuccess() {
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                mResult.setText(AccountManger.getInstance().getBdusstoken());
+//                                UILHelper.getImageLoader(MyActivity.this).displayImage(AccountManger.getInstance().getPortrait(), mIcon);
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onLoginFailed(String message) {
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                mResult.setText("登陆失败");
+//                            }
+//                        });
+//                    }
+//                });
+                //RecommentForumRequest request = new RecommentForumRequest();
+                BaWuRequest request = new BaWuRequest(new Response.Listener<String>() {
                     @Override
-                    public void onLoginSuccess() {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mResult.setText(AccountManger.getInstance().getBdusstoken());
-                                UILHelper.getImageLoader(MyActivity.this).displayImage(AccountManger.getInstance().getPortrait(), mIcon);
-                            }
-                        });
+                    public void onResponse(String s) {
+                        mWeb.loadData(s, "text/HTML", "GBK");
                     }
-
+                }, new Response.ErrorListener() {
                     @Override
-                    public void onLoginFailed(String message) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mResult.setText("登陆失败");
-                            }
-                        });
+                    public void onErrorResponse(VolleyError volleyError) {
+
                     }
                 });
 
-                request.send();
+                request.send(MyActivity.this);
             }
         });
     }
