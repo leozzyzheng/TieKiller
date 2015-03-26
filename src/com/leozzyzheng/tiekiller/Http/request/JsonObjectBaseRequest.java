@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 /**
  * Created by leozzyzheng on 2015/3/19.
+ * Json对象返回类型的请求基础
  */
 public abstract class JsonObjectBaseRequest extends BaseRequest<JSONObject> {
 
@@ -12,8 +13,8 @@ public abstract class JsonObjectBaseRequest extends BaseRequest<JSONObject> {
         super(url);
     }
 
-    protected JsonObjectBaseRequest(String url, boolean isNeed, int method) {
-        super(url, isNeed, method);
+    protected JsonObjectBaseRequest(String url, int loginTye, int method) {
+        super(url, loginTye, method);
     }
 
     @Override

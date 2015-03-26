@@ -10,4 +10,6 @@ public class UrlAddr {
 
     public static final String AUTO_LOGIN = HOST + "/c/s/login";
     public static final String FORUMRECOMMEND = HOST + "/c/f/forum/forumrecommend";
+
+    public static final String BAWU = "http://tieba.baidu.com/bawu2/platform/index";
 }

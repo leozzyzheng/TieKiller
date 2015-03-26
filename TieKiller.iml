@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="android" name="Android">
+      <configuration>
+        <option name="UPDATE_PROPERTY_FILES" value="true" />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" generated="true" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/libs" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/api20" />
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/api21" />
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/donut" />
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/eclair" />
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/eclair-mr1" />
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/froyo" />
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/gingerbread" />
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/honeycomb" />
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/honeycomb_mr1" />
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/honeycomb_mr2" />
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/ics" />
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/ics-mr1" />
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/java" />
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/jellybean" />
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/jellybean-mr1" />
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/jellybean-mr2" />
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/kitkat" />
+          <root url="file://C:/adt-bundle-windows-x86_64-20140702/sdk/extras/android/support/v4/src/tests/java" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/libs" recursive="false" />
+      </library>
+    </orderEntry>
+  </component>
+</module>

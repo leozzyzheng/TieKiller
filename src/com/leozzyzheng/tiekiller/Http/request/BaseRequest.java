@@ -13,28 +13,35 @@ import java.util.*;
  * T是模板类，用来规定请求返回的数据类型
  */
 public abstract class BaseRequest<T> {
-    private boolean mIsNeedLoginInfo = false;//默认不带登陆信息
+    private int mLoginInfoType = LOGIN_TYPE_NOTHING;//默认不带登陆信息
     private Map<String, String> mCookieHeader = new HashMap<String, String>();
     private Map<String, String> mHeaderMap = new HashMap<String, String>();
     private int mMethod;
     private String mUrl;
 
+    /**
+     * 登陆票据类型
+     */
+    public static final int LOGIN_TYPE_NOTHING = 0; //不带登陆票据
+    public static final int LOGIN_TYPE_BODY = 1; //带body的登陆票据
+    public static final int LOGIN_TYPE_COOKIE_HEADER = 2; //带cookie请求头的登陆票据
+
     protected static final int POST = 1;
     protected static final int GET = 0;
 
     protected BaseRequest(String url) {
-        this(url, true, POST);
+        this(url, LOGIN_TYPE_COOKIE_HEADER, POST);
     }
 
-    protected BaseRequest(String url, boolean isNeed, int method) {
-        setIsNeedLoginInfo(isNeed);
+    protected BaseRequest(String url, int loginType, int method) {
+        setLoginInfoType(loginType);
         mMethod = method;
         mUrl = url;
         mCookieHeader.put("ka", "open");
     }
 
-    public void setIsNeedLoginInfo(boolean isNeed) {
-        mIsNeedLoginInfo = isNeed;
+    public void setLoginInfoType(int loginType) {
+        mLoginInfoType = loginType;
     }
 
     protected void setCookieHeader(String key, String value) {
@@ -65,6 +72,10 @@ public abstract class BaseRequest<T> {
         return mUrl;
     }
 
+    public void setUrl(String url) {
+        mUrl = url;
+    }
+
     /**
      * 获取最终的请求头
      *
@@ -76,6 +87,11 @@ public abstract class BaseRequest<T> {
         String cookie = "";
         for (Map.Entry<String, String> mapping : mCookieHeader.entrySet()) {
             cookie += mapping.getKey() + "=" + mapping.getValue() + "; ";
+        }
+
+        //如果需要登陆票据
+        if ((mLoginInfoType & LOGIN_TYPE_COOKIE_HEADER) > 0 && !mCookieHeader.containsKey("BDUSS")) {
+            cookie += "BDUSS=" + AccountManger.getInstance().getBdusstoken() + "; ";
         }
 
         String a = mHeaderMap.remove("cookie");
@@ -112,7 +128,7 @@ public abstract class BaseRequest<T> {
 
         String imei = "8633568451235";//随便写的
 
-        if (mIsNeedLoginInfo) {
+        if ((mLoginInfoType & LOGIN_TYPE_BODY) > 0) {
             params.put("_client_type", "2");
             params.put("_client_version", "6.5.8");
             params.put("_phone_imei", imei);
@@ -204,10 +220,4 @@ public abstract class BaseRequest<T> {
      * @param reason 失败原因
      */
     abstract protected void onRequestFailed(Exception reason);
-
-    public static interface Listener<T> {
-        public void onRequestSuccess(T data);
-
-        public void onRequestFailed(Exception reason);
-    }
 }

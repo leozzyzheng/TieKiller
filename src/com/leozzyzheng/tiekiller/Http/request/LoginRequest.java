@@ -34,7 +34,7 @@ public class LoginRequest extends JsonObjectBaseRequest {
     }
 
     public LoginRequest(String username, String password, OnLoginListenr listener) {
-        super(UrlAddr.LOGIN, false, POST);
+        super(UrlAddr.LOGIN, LOGIN_TYPE_NOTHING, POST);
         this.username = username;
         this.password = password;
         this.loginListenr = listener;

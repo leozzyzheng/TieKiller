@@ -2,20 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-    >
+              android:layout_height="fill_parent">
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World, MyActivity"
-        />
+        android:text="@string/login_in_label"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"/>
 
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/login_in_id_hint"
         />
+
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
@@ -23,41 +27,23 @@
         android:inputType="textPassword"/>
 
     <TextView
-        android:id="@+id/login"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="登陆"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:background="#ffffff"/>
-
-    <TextView
-        android:id="@+id/auto_login"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="获取头像"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:background="#ffffff"/>
-
-    <TextView
         android:id="@+id/result"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"/>
 
-    <ImageView
-        android:id="@+id/icon"
+    <TextView
+        android:id="@+id/login"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="@string/login_in_btn"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:background="#ffffff"/>
 
-    <WebView
-        android:id="@+id/web"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
 </LinearLayout>
 

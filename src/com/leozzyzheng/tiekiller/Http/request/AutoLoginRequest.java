@@ -22,7 +22,7 @@ public class AutoLoginRequest extends JsonObjectBaseRequest {
     }
 
     public AutoLoginRequest(OnLoginListenr listener) {
-        super(UrlAddr.AUTO_LOGIN);
+        super(UrlAddr.AUTO_LOGIN, LOGIN_TYPE_BODY, POST);
         this.listener = listener;
     }
 
@@ -51,7 +51,7 @@ public class AutoLoginRequest extends JsonObjectBaseRequest {
 
         } catch (JSONException e) {
             if (listener != null) {
-                listener.onLoginFailed("自动登录失败");
+                listener.onLoginFailed("自动登录失败,请手动登陆");
             }
         }
     }
@@ -59,7 +59,7 @@ public class AutoLoginRequest extends JsonObjectBaseRequest {
     @Override
     protected void onRequestFailed(Exception reason) {
         if (listener != null) {
-            listener.onLoginFailed(reason.getMessage());
+            listener.onLoginFailed("自动登录失败,请手动登陆");
         }
     }
 }

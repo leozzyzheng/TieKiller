@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TieKiller</string>
+    <string name="login_in_label">登陆</string>
+    <string name="login_in_id_hint">请输入账号</string>
+    <string name="login_in_btn">登陆</string>
 </resources>
