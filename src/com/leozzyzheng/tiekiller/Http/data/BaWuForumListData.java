@@ -18,10 +18,10 @@ public class BaWuForumListData {
     public static class BaWuForumData {
         private String role;
         private String forum_name;
-        private String forum_id;
+        private int forum_id;
 
         private BaWuForumData(JSONObject jsonObject) throws JSONException {
-            this.forum_id = jsonObject.getString("forum_id");
+            this.forum_id = jsonObject.getInt("forum_id");
             this.forum_name = jsonObject.getString("forum_name");
             this.role = jsonObject.getString("role");
         }
@@ -34,7 +34,7 @@ public class BaWuForumListData {
             return forum_name;
         }
 
-        public String getForum_id() {
+        public int getForum_id() {
             return forum_id;
         }
     }
