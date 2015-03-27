@@ -20,8 +20,10 @@ public class BaWuForumListData {
         private String forum_name;
         private String forum_id;
 
-        private BaWuForumData() {
-
+        private BaWuForumData(JSONObject jsonObject) throws JSONException {
+            this.forum_id = jsonObject.getString("forum_id");
+            this.forum_name = jsonObject.getString("forum_name");
+            this.role = jsonObject.getString("role");
         }
 
         public String getRole() {
@@ -55,10 +57,7 @@ public class BaWuForumListData {
 
                 for (int i = 0; i < jsonArray.length(); ++i) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    BaWuForumData data = new BaWuForumData();
-                    data.forum_id = jsonObject.getString("forum_id");
-                    data.forum_name = jsonObject.getString("forum_name");
-                    data.role = jsonObject.getString("role");
+                    BaWuForumData data = new BaWuForumData(jsonObject);
                     self.mForumList.add(data);
                 }
 
