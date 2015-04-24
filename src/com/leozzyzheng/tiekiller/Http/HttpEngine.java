@@ -1,4 +1,6 @@
-package com.leozzyzheng.tiekiller.http.request;
+package com.leozzyzheng.tiekiller.http;
+
+import com.leozzyzheng.tiekiller.http.request.BaseRequest;
 
 /**
  * Created by leozzyzheng on 2015/3/12.

@@ -1,4 +1,4 @@
-package com.leozzyzheng.tiekiller.ui;
+package com.leozzyzheng.tiekiller.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,8 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.leozzyzheng.tiekiller.R;
-import com.leozzyzheng.tiekiller.account.AccountManger;
-import com.leozzyzheng.tiekiller.http.HttpEngineProvider;
+import com.leozzyzheng.tiekiller.controller.AccountManger;
 import com.leozzyzheng.tiekiller.http.request.AutoLoginRequest;
 import com.leozzyzheng.tiekiller.http.request.LoginRequest;
 import com.leozzyzheng.tiekiller.ui.base.BaseActivity;
@@ -31,12 +30,6 @@ public class LoginActivity extends BaseActivity {
         mPassword = (EditText) findViewById(R.id.password);
         mResult = (TextView) findViewById(R.id.result);
         mBtn = (TextView) findViewById(R.id.login);
-
-
-        //从配置中读取数据
-        AccountManger.getInstance().loadFromFile(this);
-        //初始化Http请求引擎
-        HttpEngineProvider.getInstance().createVollyEngine(this);
 
         //如果已经有配置，则用配置自动登录
         if (AccountManger.getInstance().getBdusstoken().length() != 0) {

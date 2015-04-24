@@ -1,5 +1,6 @@
 package com.leozzyzheng.tiekiller.http.data;
 
+import com.leozzyzheng.tiekiller.http.exception.CannotParseDataException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,7 +46,7 @@ public class BaWuForumListData {
     private BaWuForumListData() {
     }
 
-    public static BaWuForumListData parse(String html) {
+    public static BaWuForumListData parse(String html) throws CannotParseDataException {
         BaWuForumListData self = new BaWuForumListData();
         try {
             Pattern pattern = Pattern.compile("\"manage_forums\":([\\w\\W]*?\\}\\])");
@@ -63,11 +64,11 @@ public class BaWuForumListData {
 
                 return self;
             } else {
-                return null;
+                throw new CannotParseDataException();
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            throw new CannotParseDataException();
         }
     }
 

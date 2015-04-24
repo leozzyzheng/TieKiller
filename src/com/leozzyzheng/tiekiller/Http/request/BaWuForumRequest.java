@@ -1,7 +1,8 @@
 package com.leozzyzheng.tiekiller.http.request;
 
-import com.leozzyzheng.tiekiller.account.AccountManger;
+import com.leozzyzheng.tiekiller.controller.ForumManager;
 import com.leozzyzheng.tiekiller.http.data.BaWuForumListData;
+import com.leozzyzheng.tiekiller.http.exception.CannotParseDataException;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -13,15 +14,7 @@ import java.util.Map;
  */
 public class BaWuForumRequest extends StringBaseRequest {
 
-    public static interface OnBaWuListReceivedListener {
-        public void onReceived(BaWuForumListData forumListData);
-
-        public void onFailed();
-    }
-
-    private OnBaWuListReceivedListener mListener;
-
-    public BaWuForumRequest(String name, OnBaWuListReceivedListener listener) {
+    public BaWuForumRequest(String name) {
         super("");
 
         String gbkName;
@@ -32,7 +25,6 @@ public class BaWuForumRequest extends StringBaseRequest {
         }
 
         setUrl("http://tieba.baidu.com/bawu2/platform/index?word=" + gbkName);
-        mListener = listener;
     }
 
     @Override
@@ -42,19 +34,16 @@ public class BaWuForumRequest extends StringBaseRequest {
 
     @Override
     protected void onRequestSuccess(String data) {
-        BaWuForumListData forumListData = BaWuForumListData.parse(data);
-
-        if (forumListData != null) {
-            mListener.onReceived(forumListData);
-        } else {
-            mListener.onFailed();
+        try {
+            BaWuForumListData forumListData = BaWuForumListData.parse(data);
+            ForumManager.getInstance().__onReceivedBaWuForumRequest(forumListData);
+        } catch (CannotParseDataException e) {
+            ForumManager.getInstance().__onReceivedBaWuForumRequest(null);
         }
     }
 
     @Override
     protected void onRequestFailed(Exception reason) {
-        if (mListener != null) {
-            mListener.onFailed();
-        }
+        ForumManager.getInstance().__onReceivedBaWuForumRequest(null);
     }
 }

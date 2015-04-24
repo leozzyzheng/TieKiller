@@ -1,6 +1,6 @@
 package com.leozzyzheng.tiekiller.http.request;
 
-import com.leozzyzheng.tiekiller.account.AccountManger;
+import com.leozzyzheng.tiekiller.controller.AccountManger;
 import com.leozzyzheng.tiekiller.http.HttpEngineProvider;
 import com.leozzyzheng.tiekiller.http.exception.CannotParseDataException;
 import com.leozzyzheng.tiekiller.utils.MD5;

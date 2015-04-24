@@ -1,6 +1,6 @@
 package com.leozzyzheng.tiekiller.http.request;
 
-import com.leozzyzheng.tiekiller.account.AccountManger;
+import com.leozzyzheng.tiekiller.controller.AccountManger;
 import com.leozzyzheng.tiekiller.http.UrlAddr;
 import org.json.JSONException;
 import org.json.JSONObject;

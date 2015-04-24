@@ -1,7 +1,6 @@
 package com.leozzyzheng.tiekiller.http;
 
 import android.content.Context;
-import com.leozzyzheng.tiekiller.http.request.HttpEngine;
 
 /**
  * Created by leozzyzheng on 2015/3/18.

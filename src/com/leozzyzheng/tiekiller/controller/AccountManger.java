@@ -1,4 +1,4 @@
-package com.leozzyzheng.tiekiller.account;
+package com.leozzyzheng.tiekiller.controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;

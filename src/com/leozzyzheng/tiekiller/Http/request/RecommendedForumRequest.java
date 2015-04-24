@@ -1,5 +1,8 @@
 package com.leozzyzheng.tiekiller.http.request;
 
+import com.leozzyzheng.tiekiller.controller.ForumManager;
+import com.leozzyzheng.tiekiller.event.EventCenter;
+import com.leozzyzheng.tiekiller.event.MSG;
 import com.leozzyzheng.tiekiller.http.UrlAddr;
 import com.leozzyzheng.tiekiller.http.data.LikeForumListData;
 import org.json.JSONException;
@@ -12,17 +15,8 @@ import java.util.Map;
  * 请求所有关注的吧
  */
 public class RecommendedForumRequest extends JsonObjectBaseRequest {
-    public RecommendedForumRequest(OnReceivedLikeForumListener listener) {
+    public RecommendedForumRequest() {
         super(UrlAddr.FORUMRECOMMEND);
-        this.mListener = listener;
-    }
-
-    private OnReceivedLikeForumListener mListener;
-
-    public static interface OnReceivedLikeForumListener {
-        public void onReceived(LikeForumListData likeForumListData);
-
-        public void onFailed();
     }
 
     @Override
@@ -34,22 +28,14 @@ public class RecommendedForumRequest extends JsonObjectBaseRequest {
     protected void onRequestSuccess(JSONObject data) {
         try {
             LikeForumListData likeForumListData = LikeForumListData.parse(data);
-            if (mListener != null) {
-                mListener.onReceived(likeForumListData);
-            }
-
+            ForumManager.getInstance().__onReceivedLikeFormRequest(likeForumListData);
         } catch (JSONException e) {
-            if (mListener != null) {
-                mListener.onFailed();
-            }
+            ForumManager.getInstance().__onReceivedLikeFormRequest(null);
         }
-
     }
 
     @Override
     protected void onRequestFailed(Exception reason) {
-        if (mListener != null) {
-            mListener.onFailed();
-        }
+        ForumManager.getInstance().__onReceivedLikeFormRequest(null);
     }
 }
