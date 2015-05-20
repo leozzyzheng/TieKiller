@@ -1,8 +1,6 @@
 package com.leozzyzheng.tiekiller.http.request;
 
 import com.leozzyzheng.tiekiller.controller.ForumManager;
-import com.leozzyzheng.tiekiller.event.EventCenter;
-import com.leozzyzheng.tiekiller.event.MSG;
 import com.leozzyzheng.tiekiller.http.UrlAddr;
 import com.leozzyzheng.tiekiller.http.data.LikeForumListData;
 import org.json.JSONException;

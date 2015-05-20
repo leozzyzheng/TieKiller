@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.leozzyzheng.tiekiller.R;
 import com.leozzyzheng.tiekiller.controller.ForumManager;
-import com.leozzyzheng.tiekiller.event.MSG;
+import com.leozzyzheng.tiekiller.event.Msg;
 import com.leozzyzheng.tiekiller.http.data.BaWuForumListData;
 import com.leozzyzheng.tiekiller.http.data.LikeForumListData;
 import com.leozzyzheng.tiekiller.ui.adapter.BaWuForumAdapter;
@@ -108,11 +108,11 @@ public class ForumListFragment extends BaseFragment {
     }
 
     @Override
-    protected void onReceivedMsg(MSG msg) {
+    protected void onReceivedMsg(Msg msg) {
         super.onReceivedMsg(msg);
 
         //喜欢贴吧的列表请求返回
-        if (msg.getCode() == MSG.LIKE_FORUM_REQUEST_SUCCESS) {
+        if (msg.getCode() == Msg.LIKE_FORUM_REQUEST) {
             ViewHolder viewHolder = mViewArray.get(LIKE_FORUM_INDEX);
 
             if (msg.getData() != null) {
@@ -131,7 +131,7 @@ public class ForumListFragment extends BaseFragment {
             }
 
             viewHolder.swipeRefreshLayout.setRefreshing(false);
-        } else if (msg.getCode() == MSG.MANAGE_FORUM_REQUEST_SUCCESS) {
+        } else if (msg.getCode() == Msg.MANAGE_FORUM_REQUEST) {
             ViewHolder viewHolder = mViewArray.get(MANAGE_FORUM_INDEX);
 
             if (msg.getData() != null) {

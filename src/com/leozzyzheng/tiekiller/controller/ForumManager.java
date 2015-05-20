@@ -1,11 +1,13 @@
 package com.leozzyzheng.tiekiller.controller;
 
 import com.leozzyzheng.tiekiller.event.EventCenter;
-import com.leozzyzheng.tiekiller.event.MSG;
+import com.leozzyzheng.tiekiller.event.Msg;
 import com.leozzyzheng.tiekiller.http.data.BaWuForumListData;
+import com.leozzyzheng.tiekiller.http.data.ForumPageListData.ForumPageData;
 import com.leozzyzheng.tiekiller.http.data.LikeForumListData;
 import com.leozzyzheng.tiekiller.http.data.ManageForumListData;
 import com.leozzyzheng.tiekiller.http.request.BaWuForumRequest;
+import com.leozzyzheng.tiekiller.http.request.ForumPageRequest;
 import com.leozzyzheng.tiekiller.http.request.ManageForumRequest;
 import com.leozzyzheng.tiekiller.http.request.RecommendedForumRequest;
 
@@ -50,7 +52,7 @@ public class ForumManager {
         if (data != null) {
             requestManagerForum(data.justGetOne());
         } else {
-            EventCenter.getInstance().trigger(MSG.MANAGE_FORUM_REQUEST_SUCCESS, null);
+            EventCenter.getInstance().trigger(Msg.MANAGE_FORUM_REQUEST, null);
         }
     }
 
@@ -72,9 +74,9 @@ public class ForumManager {
      */
     public void __onReceivedBaWuForumRequest(BaWuForumListData baWuForumListData) {
         if (baWuForumListData != null) {
-            EventCenter.getInstance().trigger(MSG.MANAGE_FORUM_REQUEST_SUCCESS, baWuForumListData);
+            EventCenter.getInstance().trigger(Msg.MANAGE_FORUM_REQUEST, baWuForumListData);
         } else {
-            EventCenter.getInstance().trigger(MSG.MANAGE_FORUM_REQUEST_SUCCESS, null);
+            EventCenter.getInstance().trigger(Msg.MANAGE_FORUM_REQUEST, null);
         }
     }
 
@@ -92,6 +94,31 @@ public class ForumManager {
      * @param data 回调数据
      */
     public void __onReceivedLikeFormRequest(LikeForumListData data) {
-        EventCenter.getInstance().trigger(MSG.LIKE_FORUM_REQUEST_SUCCESS, data);
+        EventCenter.getInstance().trigger(Msg.LIKE_FORUM_REQUEST, data);
+    }
+
+    /**
+     * 请求指定贴吧的帖子页面
+     *
+     * @param name 贴吧名称
+     * @param num  本次请求需要的帖子数量
+     */
+    public void requestForumPage(String name, int num) {
+        ForumPageRequest request = new ForumPageRequest(name, num);
+        request.send();
+    }
+
+    /**
+     * 默认请求指定贴吧前50个帖子
+     *
+     * @param name 贴吧名称
+     */
+    public void requestForumPage(String name) {
+        requestForumPage(name, 50);
+    }
+
+    public void __onReceivedForumPageRequest(ForumPageData data)
+    {
+
     }
 }

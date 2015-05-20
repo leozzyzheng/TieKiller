@@ -2,7 +2,6 @@ package com.leozzyzheng.tiekiller.event;
 
 import android.os.Handler;
 import android.os.Looper;
-import com.leozzyzheng.tiekiller.ui.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +10,8 @@ import java.util.Map;
 
 /**
  * Created by leozzyzheng on 2015/4/1.
- * 非常简单的事件派发,在注册的消息太多的情况下可能性能有点捉急，所以这就要求使用这个类不能有太多的Activity存在于台面上
+ * 非常简单的事件派发,在注册的消息太多的情况下可能性能有点捉急，所以这就要求使用这个类不能有太多的Listener存在于台面上
+ * 不过也许写那么多阻塞的Listener本身的业务逻辑就有问题
  */
 public class EventCenter {
 
@@ -33,49 +33,49 @@ public class EventCenter {
         return instance;
     }
 
-    private Map<BaseActivity, List<MSG.MSG_CODE>> mActivityToMsgMap = new HashMap<BaseActivity, List<MSG.MSG_CODE>>();
+    private Map<EventReceiverListener, List<Msg.MsgCode>> mListenerToMsgMap = new HashMap<EventReceiverListener, List<Msg.MsgCode>>();
 
     /**
      * 监听消息的发送
      *
-     * @param activity 监听者
+     * @param listener 监听者
      * @param msg      消息
      */
-    public void listen(BaseActivity activity, MSG.MSG_CODE msg) {
+    public void listen(EventReceiverListener listener, Msg.MsgCode msg) {
         synchronized (this) {
-            List<MSG.MSG_CODE> msgList = mActivityToMsgMap.get(activity);
+            List<Msg.MsgCode> msgList = mListenerToMsgMap.get(listener);
 
             if (msgList == null) {
-                msgList = new ArrayList<MSG.MSG_CODE>();
+                msgList = new ArrayList<Msg.MsgCode>();
             }
 
             msgList.add(msg);
-            mActivityToMsgMap.put(activity, msgList);
+            mListenerToMsgMap.put(listener, msgList);
         }
 
     }
 
     /**
-     * 移除Activity相关的所有监听
+     * 移除listener相关的所有监听
      *
-     * @param activity Activity
+     * @param listener listener
      */
-    public void remove(BaseActivity activity) {
-        remove(activity, null);
+    public void remove(EventReceiverListener listener) {
+        remove(listener, null);
     }
 
     /**
-     * 移除Activity指定的msg监听
+     * 移除listener指定的msg监听
      *
-     * @param activity Activity
+     * @param listener listener
      * @param msg      消息
      */
-    public void remove(BaseActivity activity, MSG.MSG_CODE msg) {
+    public void remove(EventReceiverListener listener, Msg.MsgCode msg) {
         synchronized (this) {
             if (msg == null) {
-                mActivityToMsgMap.remove(activity);
+                mListenerToMsgMap.remove(listener);
             } else {
-                List<MSG.MSG_CODE> msgList = mActivityToMsgMap.get(activity);
+                List<Msg.MsgCode> msgList = mListenerToMsgMap.get(listener);
 
                 if (msgList != null) {
                     msgList.remove(msg);
@@ -90,16 +90,25 @@ public class EventCenter {
      * @param msg  消息
      * @param data 数据
      */
-    public void trigger(MSG.MSG_CODE msg, Object data) {
+    public void trigger(Msg.MsgCode msg, Object data) {
         synchronized (this) {
-            for (Map.Entry<BaseActivity, List<MSG.MSG_CODE>> mapping : mActivityToMsgMap.entrySet()) {
-                List<MSG.MSG_CODE> msgList = mapping.getValue();
+            for (Map.Entry<EventReceiverListener, List<Msg.MsgCode>> mapping : mListenerToMsgMap.entrySet()) {
+                List<Msg.MsgCode> msgList = mapping.getValue();
 
                 if (msgList != null && msgList.contains(msg)) {
-                    mapping.getKey().onReceivedMsg(new MSG(msg, data));
+                    mapping.getKey().onReceivedMsg(new Msg(msg, data));
                 }
             }
         }
+    }
+
+    /**
+     * 重载，见{@link #trigger(Msg.MsgCode msg, Object data)}
+     *
+     * @param msg 不需要附带数据的消息
+     */
+    public void trigger(Msg.MsgCode msg) {
+        trigger(msg, null);
     }
 
     /**
@@ -108,7 +117,7 @@ public class EventCenter {
      * @param msg  消息
      * @param data 数据
      */
-    public void post(final MSG.MSG_CODE msg, final Object data) {
+    public void post(final Msg.MsgCode msg, final Object data) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {

@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.leozzyzheng.tiekiller.R;
+import com.leozzyzheng.tiekiller.controller.ForumManager;
 import com.leozzyzheng.tiekiller.http.data.LikeForumListData.LikeForumData;
 import com.leozzyzheng.tiekiller.utils.UILHelper;
 
@@ -58,6 +59,7 @@ public class LikeForumListAdapter extends BaseAdapter {
 
     /**
      * 设置数据，会让整个列表都刷新
+     *
      * @param data 新的数据
      */
     public void setData(List<LikeForumData> data) {
@@ -72,7 +74,7 @@ public class LikeForumListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -92,6 +94,13 @@ public class LikeForumListAdapter extends BaseAdapter {
             viewHolder.forumName.setText(data.getForum_name());
             viewHolder.forumLevel.setText(data.getLevel_id());
             viewHolder.forumIsSign.setText(data.getIs_sign() == 1 ? "已签到" : "未签到");
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ForumManager.getInstance().requestForumPage(mData.get(position).getForum_name());
+                }
+            });
         }
 
         return convertView;

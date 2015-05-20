@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import com.leozzyzheng.tiekiller.R;
 import com.leozzyzheng.tiekiller.event.EventCenter;
-import com.leozzyzheng.tiekiller.event.MSG;
+import com.leozzyzheng.tiekiller.event.EventReceiverListener;
+import com.leozzyzheng.tiekiller.event.Msg;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
  * Created by leozzyzheng on 2015/3/26.
  * Activity的基类，用来做一些统一的操作
  */
-public class BaseActivity extends Activity {
+public class BaseActivity extends Activity implements EventReceiverListener {
 
     private List<BaseFragment> mBaseFragments = new ArrayList<BaseFragment>();
 
@@ -27,9 +28,6 @@ public class BaseActivity extends Activity {
         if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(true);
         }
-
-        addListen(MSG.NONE);
-        addListen(MSG.MSG_PROCEEDING_STATE);
     }
 
     @Override
@@ -44,7 +42,7 @@ public class BaseActivity extends Activity {
         EventCenter.getInstance().remove(this);
     }
 
-    final protected void addListen(MSG.MSG_CODE msg) {
+    final protected void addListen(Msg.MsgCode msg) {
         EventCenter.getInstance().listen(this, msg);
     }
 
@@ -71,7 +69,7 @@ public class BaseActivity extends Activity {
      *
      * @param msg 消息
      */
-    public void onReceivedMsg(MSG msg) {
+    public void onReceivedMsg(final Msg msg) {
         if (isFinishing()) {
             return;
         }
@@ -81,17 +79,33 @@ public class BaseActivity extends Activity {
             fragment.onReceivedMsg(msg);
         }
 
-        if (getActionBar() != null) {
-            //处理一下状态，如果有文字，则app的标题栏显示该文字，否则则显示应用名称
-            if (msg.getCode() == MSG.MSG_PROCEEDING_STATE) {
-                if (msg.getData() == null) {
-                    getActionBar().setTitle(R.string.app_name);
-                } else {
-                    getActionBar().setTitle((String) msg.getData());
+        if (!onReceivedDirectThread(msg)) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    onReceivedOnUIThread(msg);
                 }
-            } else if (msg.getCode() == MSG.NONE) {
-                getActionBar().setTitle(R.string.app_name);
-            }
+            });
         }
+    }
+
+    /**
+     * 直接发送事件,如果事件回调本来就在UI线程，该函数还是会先调用
+     *
+     * @param msg 派发的事件
+     * @return true 表示事件已经处理，后续不再通知一次UI线程的派发函数<br/>
+     * false 表示事件没有处理，需要后续再派发一次UI线程的
+     */
+    public boolean onReceivedDirectThread(Msg msg) {
+        return false;
+    }
+
+    /**
+     * 在UI线程派发消息，如果消息已经在非UI线程处理了，则这个函数不会被调用
+     *
+     * @param msg 消息
+     */
+    public void onReceivedOnUIThread(Msg msg) {
+
     }
 }

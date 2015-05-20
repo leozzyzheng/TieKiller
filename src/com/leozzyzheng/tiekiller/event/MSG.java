@@ -7,24 +7,58 @@ import com.leozzyzheng.tiekiller.http.data.LikeForumListData;
  * Created by leozzyzheng on 2015/4/20.
  * 消息定义
  */
-public class MSG {
-    public static class MSG_CODE {
+public class Msg {
+
+    /**
+     * *************************消息枚举,加消息写这里，其余地方不用动**********************
+     */
+
+    public static final MsgCode NONE = new MsgCode();
+    public static final MsgCode LIKE_FORUM_REQUEST = new MsgCode(LikeForumListData.class);
+    public static final MsgCode MANAGE_FORUM_REQUEST = new MsgCode(BaWuForumListData.class);
+
+    /**
+     * ***********************消息枚举结束*********************************************
+     */
+
+    private MsgCode code;
+    private Object data;
+
+    public Msg(MsgCode code, Object data) {
+        this.code = code;
+        this.data = data;
+    }
+
+    public MsgCode getCode() {
+        return code;
+    }
+
+    public Object getData() {
+        return code.convert(data);
+    }
+
+    public static class MsgCode {
         private static int index = 0;
 
         private int code;
         private Class<?> cls;
 
-        private MSG_CODE() {
+        private MsgCode() {
             this(null);
         }
 
-        private MSG_CODE(Class<?> cls) {
+        private MsgCode(Class<?> cls) {
             this.code = ++index;
             this.cls = cls;
         }
 
         public int code() {
             return code;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return o instanceof MsgCode && code == ((MsgCode) o).code();
         }
 
         /**
@@ -46,26 +80,5 @@ public class MSG {
                 throw new IllegalArgumentException("Data is not the instance of class:" + cls.getName());
             }
         }
-    }
-
-    public static final MSG_CODE NONE = new MSG_CODE();
-    public static final MSG_CODE MSG_PROCEEDING_STATE = new MSG_CODE(String.class);
-    public static final MSG_CODE LIKE_FORUM_REQUEST_SUCCESS = new MSG_CODE(LikeForumListData.class);
-    public static final MSG_CODE MANAGE_FORUM_REQUEST_SUCCESS = new MSG_CODE(BaWuForumListData.class);
-
-    private MSG_CODE code;
-    private Object data;
-
-    public MSG(MSG_CODE code, Object data) {
-        this.code = code;
-        this.data = data;
-    }
-
-    public MSG_CODE getCode() {
-        return code;
-    }
-
-    public Object getData() {
-        return code.convert(data);
     }
 }
